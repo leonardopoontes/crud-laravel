@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\UserStoreRequest;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -21,10 +23,9 @@ class UsersController extends Controller
         return view('users.create');
     }
 
-    public function store(Request $request)
+    public function store(UserStoreRequest $request)
     {
-        $data = $request->only(['name', 'email']);
-        $data['password'] = bcrypt("password");
+        $data = $request->all();
 
         User::create($data);
 
@@ -63,6 +64,8 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
+
+        if (!$user) throw new ModelNotFoundException();
 
         //$user->delete();
         $user->delete();

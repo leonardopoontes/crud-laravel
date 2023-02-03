@@ -17,13 +17,33 @@
         @csrf
         <div class="mb-3">
             <label for="name" class="form-label">Nome:</label>
-            <input type="text" name="name" class="form-control" id="name">
+            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" id="name" value="{{old('name')}}">
+            @error('name')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
         </div>
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" class="form-control" id="email">
+            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" value="{{old('email')}}">
+            @error('email')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Atualizar</button>
+        <div class="form-check">
+            <input class="form-check-input @error('term') is-invalid @enderror" type="radio" name="term" id="term" value="on" >
+            <label class="form-check-label" for="flexRadioDefault1">
+                Termos de uso
+            </label>
+            @error('term')
+            {{$message}}
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-primary">SALVAR</button>
     </form>
 
 </main>
